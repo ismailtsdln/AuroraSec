@@ -59,6 +59,14 @@ var auditCmd = &cobra.Command{
 			if err := report.SaveJSON(result, outputFile); err != nil {
 				return err
 			}
+		case "csv":
+			if err := report.SaveCSV(result, outputFile); err != nil {
+				return err
+			}
+		case "html":
+			if err := report.SaveHTML(result, outputFile); err != nil {
+				return err
+			}
 		default:
 			return fmt.Errorf("unsupported output format: %s", format)
 		}

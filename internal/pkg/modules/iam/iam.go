@@ -9,8 +9,14 @@ import (
 	"github.com/ismailtsdln/AuroraSec/internal/pkg/audit"
 )
 
+// IAMAPI defines the interface for IAM client calls to allow mocking
+type IAMAPI interface {
+	GetAccountSummary(ctx context.Context, params *iam.GetAccountSummaryInput, optFns ...func(*iam.Options)) (*iam.GetAccountSummaryOutput, error)
+	GetAccountPasswordPolicy(ctx context.Context, params *iam.GetAccountPasswordPolicyInput, optFns ...func(*iam.Options)) (*iam.GetAccountPasswordPolicyOutput, error)
+}
+
 type IAMModule struct {
-	client *iam.Client
+	client IAMAPI
 }
 
 func NewIAMModule(cfg aws.Config) *IAMModule {
