@@ -16,30 +16,19 @@ func PrintTable(result *audit.Result) {
 	fmt.Printf("\n")
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Severity", "Status", "Module", "Title", "Resource"})
-	table.SetAutoWrapText(false)
-	table.SetAutoFormatHeaders(true)
-	table.SetHeaderAlignment(tablewriter.ALIGN_LEFT)
-	table.SetAlignment(tablewriter.ALIGN_LEFT)
-	table.SetCenterSeparator("")
-	table.SetColumnSeparator("")
-	table.SetRowSeparator("")
-	table.SetHeaderLine(false)
-	table.SetBorder(false)
-	table.SetTablePadding("\t") // pad with tabs
-	table.SetNoWhiteSpace(true)
+	table.Header("Severity", "Status", "Module", "Title", "Resource")
 
 	for _, f := range result.Findings {
 		sevColor := getSeverityColor(f.Severity)
 		statusColor := getStatusColor(f.Status)
 
-		table.Append([]string{
+		table.Append(
 			sevColor(string(f.Severity)),
 			statusColor(f.Status),
 			f.Module,
 			f.Title,
 			f.Resource,
-		})
+		)
 	}
 
 	table.Render()

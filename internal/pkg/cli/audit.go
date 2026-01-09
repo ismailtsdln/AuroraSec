@@ -6,6 +6,7 @@ import (
 
 	"github.com/ismailtsdln/AuroraSec/internal/pkg/audit"
 	"github.com/ismailtsdln/AuroraSec/internal/pkg/modules/iam"
+	"github.com/ismailtsdln/AuroraSec/internal/pkg/modules/networking"
 	"github.com/ismailtsdln/AuroraSec/internal/pkg/modules/s3"
 	"github.com/ismailtsdln/AuroraSec/internal/pkg/report"
 	"github.com/spf13/cobra"
@@ -36,6 +37,8 @@ var auditCmd = &cobra.Command{
 				engine.RegisterModule(iam.NewIAMModule(awsClient.Config))
 			case "s3":
 				engine.RegisterModule(s3.NewS3Module(awsClient.Config))
+			case "networking":
+				engine.RegisterModule(networking.NewNetworkingModule(awsClient.Config))
 			}
 		}
 

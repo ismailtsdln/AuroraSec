@@ -25,6 +25,11 @@ func NewAWSClient(ctx context.Context, profile string, region string) (*AWSClien
 		opts = append(opts, config.WithRegion(region))
 	}
 
+	// Add custom retryer
+	opts = append(opts, config.WithRetryer(func() aws.Retryer {
+		return NewCustomRetryer()
+	}))
+
 	cfg, err := config.LoadDefaultConfig(ctx, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("unable to load SDK config, %v", err)
