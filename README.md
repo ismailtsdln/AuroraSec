@@ -3,9 +3,13 @@
 ## Next-Generation AWS Security Auditing & Hardening Engine
 
 [![AuroraSec CI](https://github.com/ismailtsdln/AuroraSec/actions/workflows/main.yml/badge.svg)](https://github.com/ismailtsdln/AuroraSec/actions/workflows/main.yml)
+<<<<<<< HEAD
 [![Go Report Card](https://goreportcard.com/badge/github.com/ismailtsdln/AuroraSec)](https://goreportcard.com/report/github.com/ismailtsdln/AuroraSec)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/ismailtsdln/AuroraSec)](https://github.com/ismailtsdln/AuroraSec)
+=======
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+>>>>>>> 9bd36f0d19d627eb54a3539e9e2512209b1b6fc2
 
 **AuroraSec** is a high-performance, modular auditing utility designed to provide deep visibility into the security posture of AWS environments. Built with the **AWS SDK for Go v2**, it prioritizes speed, reliability, and actionable intelligence.
 
