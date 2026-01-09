@@ -1,7 +1,6 @@
 # AuroraSec
 
 [![AuroraSec CI](https://github.com/ismailtsdln/AuroraSec/actions/workflows/main.yml/badge.svg)](https://github.com/ismailtsdln/AuroraSec/actions/workflows/main.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ismailtsdln/AuroraSec)](https://goreportcard.com/report/github.com/ismailtsdln/AuroraSec)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **AuroraSec** is a high-performance, modular AWS auditing and hardening tool built in Go. It allows security professionals to quickly identify misconfigurations and security risks across their AWS accounts.
