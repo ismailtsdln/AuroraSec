@@ -10,21 +10,24 @@ import (
 )
 
 func PrintTable(result *audit.Result) {
-	fmt.Printf("\n--- AuroraSec Scan Report ---\n")
-	fmt.Printf("Started: %s\n", result.StartTime.Format("2006-01-02 15:04:05"))
-	fmt.Printf("Ended:   %s\n", result.EndTime.Format("2006-01-02 15:04:05"))
-	fmt.Printf("\n")
+	fmt.Printf("\n%s\n", color.New(color.FgCyan, color.Bold).Sprint("─── AURORASEC SCAN REPORT ───"))
+	fmt.Printf("%s %s\n", color.CyanString("📅 Start:"), result.StartTime.Format("2006-01-02 15:04:05"))
+	fmt.Printf("%s %s\n", color.CyanString("🏁 End:  "), result.EndTime.Format("2006-01-02 15:04:05"))
+	fmt.Println()
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.Header("Severity", "Status", "Module", "Title", "Resource")
+	table.Header("SEVERITY", "STATUS", "MODULE", "TITLE", "RESOURCE")
 
 	for _, f := range result.Findings {
 		sevColor := getSeverityColor(f.Severity)
 		statusColor := getStatusColor(f.Status)
 
+		severityIcon := getSeverityIcon(f.Severity)
+		statusIcon := getStatusIcon(f.Status)
+
 		table.Append(
-			sevColor(string(f.Severity)),
-			statusColor(f.Status),
+			sevColor(fmt.Sprintf("%s %s", severityIcon, f.Severity)),
+			statusColor(fmt.Sprintf("%s %s", statusIcon, f.Status)),
 			f.Module,
 			f.Title,
 			f.Resource,
@@ -33,13 +36,56 @@ func PrintTable(result *audit.Result) {
 
 	table.Render()
 
-	fmt.Printf("\nSummary: %d Total Findings | ", result.Summary.Total)
-	color.Red("%d Critical", result.Summary.Critical)
-	fmt.Printf(" | ")
-	color.Yellow("%d High", result.Summary.High)
-	fmt.Printf(" | %d Medium | %d Low | ", result.Summary.Medium, result.Summary.Low)
-	color.Green("%d Passed", result.Summary.Passed)
-	fmt.Printf("\n")
+	fmt.Printf("\n%s\n", color.New(color.FgCyan, color.Bold).Sprint("─── SUMMARY ───"))
+	fmt.Printf("%s %d Total Findings\n", color.WhiteString("📊"), result.Summary.Total)
+
+	summaryLine := ""
+	if result.Summary.Critical > 0 {
+		summaryLine += color.New(color.FgRed, color.Bold).Sprintf("🚨 %d Critical  ", result.Summary.Critical)
+	}
+	if result.Summary.High > 0 {
+		summaryLine += color.RedString("🔴 %d High  ", result.Summary.High)
+	}
+	if result.Summary.Medium > 0 {
+		summaryLine += color.YellowString("🟡 %d Medium  ", result.Summary.Medium)
+	}
+	if result.Summary.Low > 0 {
+		summaryLine += color.CyanString("🔵 %d Low  ", result.Summary.Low)
+	}
+
+	if summaryLine != "" {
+		fmt.Println(summaryLine)
+	}
+
+	fmt.Printf("%s %d Passed  ", color.GreenString("✅"), result.Summary.Passed)
+	fmt.Printf("%s %d Failed\n", color.RedString("❌"), result.Summary.Failed)
+	fmt.Println()
+}
+
+func getSeverityIcon(s audit.Severity) string {
+	switch s {
+	case audit.SeverityCritical:
+		return "🚨"
+	case audit.SeverityHigh:
+		return "🔴"
+	case audit.SeverityMedium:
+		return "🟡"
+	case audit.SeverityLow:
+		return "🔵"
+	default:
+		return "⚪"
+	}
+}
+
+func getStatusIcon(s string) string {
+	switch s {
+	case "PASS":
+		return "✅"
+	case "FAIL":
+		return "❌"
+	default:
+		return "❓"
+	}
 }
 
 func getSeverityColor(s audit.Severity) func(a ...interface{}) string {

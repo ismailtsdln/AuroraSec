@@ -18,9 +18,11 @@
 ## Installation
 
 ### From Binary
+
 Download the latest binary from the [Releases](https://github.com/ismailtsdln/AuroraSec/releases) page.
 
 ### From Source
+
 ```bash
 go install github.com/ismailtsdln/AuroraSec/cmd/aurorasec@latest
 ```
@@ -28,24 +30,31 @@ go install github.com/ismailtsdln/AuroraSec/cmd/aurorasec@latest
 ## Usage
 
 ### Basic Audit
+
 Run a full audit with default modules (IAM, S3, Networking):
+
 ```bash
 aurorasec audit
 ```
 
 ### Specific Modules
+
 Only run specific modules:
+
 ```bash
 aurorasec audit --modules iam,s3
 ```
 
 ### Output Formats
+
 Generate an HTML report:
+
 ```bash
 aurorasec audit --format html --output report.html
 ```
 
 Generate a JSON report for automation:
+
 ```bash
 aurorasec audit --format json --output results.json
 ```
@@ -53,6 +62,7 @@ aurorasec audit --format json --output results.json
 ## Architecture
 
 AuroraSec is designed for scalability and maintainability:
+
 - **`cmd/`**: CLI entry point and command definitions.
 - **`internal/pkg/audit/`**: Core engine that orchestrates module execution.
 - **`internal/pkg/modules/`**: Plugin-style modules for different AWS services.

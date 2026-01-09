@@ -6,9 +6,10 @@ We take the security of AuroraSec seriously. If you have found a security vulner
 
 ### Where to report
 
-Please send security reports to: **security@yourdomain.com** (Replace with actual contact)
+Please send security reports to: **security@yourdomain.com**
 
 Please include as much information as possible, including:
+
 - A description of the vulnerability.
 - Steps to reproduce the issue.
 - Potential impact.
@@ -17,6 +18,7 @@ Please include as much information as possible, including:
 ### Response Process
 
 Upon receiving a report, we will:
+
 1. Acknowledge receipt within 48 hours.
 2. Investigate the issue and determine the severity.
 3. Work on a fix.

@@ -9,6 +9,8 @@ import (
 	"github.com/ismailtsdln/AuroraSec/internal/pkg/modules/networking"
 	"github.com/ismailtsdln/AuroraSec/internal/pkg/modules/s3"
 	"github.com/ismailtsdln/AuroraSec/internal/pkg/report"
+	"github.com/ismailtsdln/AuroraSec/internal/pkg/ui"
+	"github.com/ismailtsdln/AuroraSec/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -18,13 +20,17 @@ var auditCmd = &cobra.Command{
 	Long:  `AuroraSec audit scans your AWS infrastructure for security vulnerabilities, misconfigurations, and non-compliance with best practices.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		ctx := context.Background()
-		fmt.Println("🚀 Starting AWS Security Audit...")
+		logger := utils.NewLogger("INFO")
+
+		ui.PrintBanner()
+		logger.Info("Initializing AWS Security Audit...")
 
 		// 1. Initialize AWS Client
-		awsClient, err := audit.NewAWSClient(ctx, "", "") // Use default profile/region for now
+		awsClient, err := audit.NewAWSClient(ctx, "", "")
 		if err != nil {
 			return fmt.Errorf("failed to initialize AWS client: %v", err)
 		}
+		logger.Success("AWS SDK connection established")
 
 		// 2. Initialize Audit Engine
 		engine := audit.NewEngine()
@@ -32,6 +38,7 @@ var auditCmd = &cobra.Command{
 		// 3. Register Modules (based on flags)
 		modules, _ := cmd.Flags().GetStringSlice("modules")
 		for _, m := range modules {
+			logger.Info("Registering module: %s", m)
 			switch m {
 			case "iam":
 				engine.RegisterModule(iam.NewIAMModule(awsClient.Config))
@@ -43,10 +50,12 @@ var auditCmd = &cobra.Command{
 		}
 
 		// 4. Run Audit
+		logger.Info("Running security checks... Hold on!")
 		result, err := engine.Run(ctx)
 		if err != nil {
 			return fmt.Errorf("audit failed: %v", err)
 		}
+		logger.Success("Audit completed successfully!")
 
 		// 5. Report Results
 		format, _ := cmd.Flags().GetString("format")
